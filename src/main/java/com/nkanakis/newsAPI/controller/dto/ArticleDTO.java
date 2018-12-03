@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -20,7 +20,7 @@ public class ArticleDTO {
     @JsonProperty(value = "description")
     private String desc;
     @JsonProperty(value = "publication_date")
-    private ZonedDateTime publicationDate;
+    private LocalDate publicationDate;
 
     private List<String> authors;
     private List<String> keywords;
