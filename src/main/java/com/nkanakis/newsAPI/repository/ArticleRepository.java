@@ -1,7 +1,18 @@
 package com.nkanakis.newsAPI.repository;
 
 import com.nkanakis.newsAPI.repository.model.Article;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.nkanakis.newsAPI.repository.model.Author;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface ArticleRepository extends JpaRepository<Article, Long> {
+import java.time.LocalDate;
+import java.util.List;
+
+
+public interface ArticleRepository extends MongoRepository<Article, Long> {
+
+   List<Article> findByPublicationPeriodBetween(LocalDate start, LocalDate end);
+
+   List<Article> findByKeywordsContaining(String keyword);
+
+   List<Article> findByAuthorsContaining(Author author);
 }

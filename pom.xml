@@ -24,6 +24,8 @@
         <swagger.version>2.9.2</swagger.version>
         <jacoco.version>0.8.2</jacoco.version>
         <lombok.version>1.18.2</lombok.version>
+        <embed.mongo.version>2.0.0</embed.mongo.version>
+        <embedmongo.spring.version>1.3.1</embedmongo.spring.version>
     </properties>
 
     <dependencies>
@@ -43,14 +45,20 @@
         </dependency>
 
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <groupId>de.flapdoodle.embed</groupId>
+            <artifactId>de.flapdoodle.embed.mongo</artifactId>
+            <version>${embed.mongo.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cz.jirutka.spring</groupId>
+            <artifactId>embedmongo-spring</artifactId>
+            <version>${embedmongo.spring.version}</version>
         </dependency>
 
         <dependency>
