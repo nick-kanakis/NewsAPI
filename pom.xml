@@ -26,6 +26,8 @@
         <lombok.version>1.18.2</lombok.version>
         <embed.mongo.version>1.50.5</embed.mongo.version>
         <embedmongo.spring.version>RELEASE</embedmongo.spring.version>
+        <maven.failsafe.version>2.22.0</maven.failsafe.version>
+        <maven.surefire.version>2.22.0</maven.surefire.version>
     </properties>
 
     <dependencies>
@@ -99,6 +101,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.version}</version>
                 <configuration>
                     <excludes>
                         <exclude>**/*IT</exclude>
@@ -106,7 +109,9 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven.failsafe.version}</version>
                 <executions>
                     <execution>
                         <goals>
