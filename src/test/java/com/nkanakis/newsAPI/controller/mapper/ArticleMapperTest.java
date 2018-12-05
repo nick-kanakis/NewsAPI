@@ -1,7 +1,6 @@
-package com.nkanakis.newsAPI.controller;
+package com.nkanakis.newsAPI.controller.mapper;
 
 import com.nkanakis.newsAPI.controller.dto.ArticleDTO;
-import com.nkanakis.newsAPI.controller.mapper.ArticleMapper;
 import com.nkanakis.newsAPI.repository.model.Article;
 import com.nkanakis.newsAPI.repository.model.Author;
 import de.flapdoodle.embed.process.collections.Collections;

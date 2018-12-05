@@ -14,6 +14,8 @@ public class ArticleMapper {
 
     public ArticleDTO toDTO(Article article) {
         ArticleDTO dto = new ArticleDTO();
+        if (article == null)
+            return dto;
         BeanUtils.copyProperties(article, dto);
 
         List<String> authors = article.getAuthors().stream()
@@ -26,6 +28,8 @@ public class ArticleMapper {
 
     public Article toEntity(ArticleDTO dto) {
         Article article = new Article();
+        if (dto == null)
+            return article;
         BeanUtils.copyProperties(dto, article);
 
         List<Author> authors = dto.getAuthors().stream()

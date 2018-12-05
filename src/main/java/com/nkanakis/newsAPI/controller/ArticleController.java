@@ -18,7 +18,6 @@ import java.util.List;
 @Api(value = "Article API", description = "Article retrieval operations")
 @RequestMapping(path = "/articles")
 public class ArticleController {
-    //todo: sanitize/validate input
 
     @Autowired
     private ArticleMapper mapper;
@@ -33,7 +32,7 @@ public class ArticleController {
         return ResponseEntity.ok(article);
     }
 
-    @GetMapping(path = "/byAuthor}")
+    @GetMapping(path = "/byAuthor")
     @ApiOperation(value = "Retrieves Article by author first & last name", response = ArticleDTO.class, responseContainer = "List")
     public ResponseEntity<List<ArticleDTO>> getArticlesByAuthor(@RequestParam final String firstName, @RequestParam final String lastName) {
         List<Article> articlesByAuthor = articleService.getArticlesByAuthor(firstName, lastName);
@@ -43,8 +42,8 @@ public class ArticleController {
     @GetMapping(path = "/byKeyword/{keyword}")
     @ApiOperation(value = "Retrieves Article by author name", response = ArticleDTO.class, responseContainer = "List")
     public ResponseEntity<List<ArticleDTO>> getArticlesByKeyword(@PathVariable final String keyword) {
-        List<Article> articlesByAuthor = articleService.getArticlesByKeyword(keyword);
-        return ResponseEntity.ok(mapper.toDTOs(articlesByAuthor));
+        List<Article> articlesByKeyword = articleService.getArticlesByKeyword(keyword);
+        return ResponseEntity.ok(mapper.toDTOs(articlesByKeyword));
     }
 
     @GetMapping(path = "/byPeriod")
@@ -53,11 +52,11 @@ public class ArticleController {
     public ResponseEntity<List<ArticleDTO>> getArticlesByPeriod(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
                                                                 @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
         if (startDate == null)
-            startDate = LocalDate.MIN;
+            startDate = LocalDate.ofEpochDay(0);
         if (endDate == null)
-            endDate = LocalDate.MAX;
-        List<Article> articlesByAuthor = articleService.getArticlesByPeriod(startDate, endDate);
-        return ResponseEntity.ok(mapper.toDTOs(articlesByAuthor));
+            endDate = LocalDate.now();
+        List<Article> articlesByPeriod = articleService.getArticlesByPeriod(startDate, endDate);
+        return ResponseEntity.ok(mapper.toDTOs(articlesByPeriod));
     }
 
 }
