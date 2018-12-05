@@ -1,13 +1,13 @@
 package com.nkanakis.newsAPI.repository.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 
 @Getter
 @Setter
 @AllArgsConstructor
+@EqualsAndHashCode
+@ToString
 public class Author {
     private String firstname;
     private String lastname;
