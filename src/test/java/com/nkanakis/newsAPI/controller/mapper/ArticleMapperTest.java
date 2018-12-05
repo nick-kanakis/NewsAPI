@@ -13,7 +13,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
@@ -54,8 +53,6 @@ public class ArticleMapperTest {
 
     @Test
     public void testInvalidInputToDto() {
-        assertThatIllegalArgumentException().isThrownBy(() -> mapper.toDTO(null));
-
         article.setAuthors(new ArrayList<>());
         articleDTO.setAuthors(new ArrayList<>());
         assertEquals(article, mapper.toEntity(articleDTO));
@@ -63,7 +60,6 @@ public class ArticleMapperTest {
 
     @Test
     public void testInvalidInputToEntity() {
-        assertThatIllegalArgumentException().isThrownBy(() -> mapper.toEntity(null));
         articleDTO.setAuthors(Collections.newArrayList(""));
         assertEquals(mapper.toEntity(articleDTO).getAuthors().size(), 0);
         articleDTO.setAuthors(Collections.newArrayList(" "));

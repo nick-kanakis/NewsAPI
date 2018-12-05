@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 @RestController
 @Api(value = "Article API", description = "Article retrieval operations")
 @RequestMapping(path = "/articles")
@@ -30,15 +33,28 @@ public class ArticleController {
     @GetMapping(path = "/byId/{id}")
     @ApiOperation(value = "Retrieves Article by given id", response = ArticleDTO.class)
     public ResponseEntity<ArticleDTO> getArticleById(@PathVariable final String id) {
-        ArticleDTO article = mapper.toDTO(articleService.getArticleById(id));
-        return ResponseEntity.ok(article);
+        ArticleDTO dto = mapper.toDTO(articleService.getArticleById(id));
+        for (String a : dto.getAuthors()) {
+            String[] s = a.split(" ");
+            dto.add(linkTo(methodOn(ArticleController.class).getArticlesByAuthor(s[0], s[1])).withSelfRel());
+        }
+        for (String k : dto.getKeywords()) {
+            dto.add(linkTo(methodOn(ArticleController.class).getArticlesByKeyword(k)).withSelfRel());
+        }
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping(path = "/byAuthor")
     @ApiOperation(value = "Retrieves Article by author first & last name", response = ArticleDTO.class, responseContainer = "List")
     public ResponseEntity<List<ArticleDTO>> getArticlesByAuthor(@RequestParam final String firstName, @RequestParam final String lastName) {
         List<Article> articlesByAuthor = articleService.getArticlesByAuthor(firstName, lastName);
-        return ResponseEntity.ok(mapper.toDTOs(articlesByAuthor));
+        List<ArticleDTO> articleDTOS = mapper.toDTOs(articlesByAuthor);
+
+        for (ArticleDTO dto : articleDTOS) {
+            dto.add(linkTo(methodOn(ArticleController.class).getArticleById(dto.getArticleId())).withSelfRel());
+        }
+
+        return ResponseEntity.ok(articleDTOS);
     }
 
     @GetMapping(path = "/byKeyword/{keyword}")
@@ -57,13 +73,17 @@ public class ArticleController {
             log.info("Start date not provided setting day to 1970-01-01");
             startDate = LocalDate.ofEpochDay(0);
         }
-
         if (endDate == null) {
             log.info("End date not provided setting day to current date");
             endDate = LocalDate.now();
         }
         List<Article> articlesByPeriod = articleService.getArticlesByPeriod(startDate, endDate);
-        return ResponseEntity.ok(mapper.toDTOs(articlesByPeriod));
+
+        List<ArticleDTO> articleDTOS = mapper.toDTOs(articlesByPeriod);
+        for (ArticleDTO dto : articleDTOS) {
+            dto.add(linkTo(methodOn(ArticleController.class).getArticleById(dto.getArticleId())).withSelfRel());
+        }
+        return ResponseEntity.ok(articleDTOS);
     }
 
 }

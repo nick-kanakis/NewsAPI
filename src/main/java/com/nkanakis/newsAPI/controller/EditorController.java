@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 @RestController
 @Api(value = "Editor API", description = "CUD Operations on articles, accessible only by editors")
 @Slf4j
@@ -31,7 +34,9 @@ public class EditorController {
     @ApiOperation(value = "Creates article", response = ArticleDTO.class)
     public ResponseEntity<ArticleDTO> createArticle(@Valid @RequestBody ArticleDTO article) {
         Article createdArticle = editorService.createArticle(mapper.toEntity(article));
-        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toDTO(createdArticle));
+        ArticleDTO articleDTO = mapper.toDTO(createdArticle);
+        articleDTO.add(linkTo(methodOn(ArticleController.class).getArticleById(articleDTO.getArticleId())).withSelfRel());
+        return ResponseEntity.status(HttpStatus.CREATED).body(articleDTO);
     }
 
     @PutMapping
@@ -42,7 +47,9 @@ public class EditorController {
             log.info("Id: {} does not exist, failed to update article", article.getId());
             throw new IllegalArgumentException("Could not update article please review provided id");
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toDTO(updatedArticle));
+        ArticleDTO articleDTO = mapper.toDTO(updatedArticle);
+        articleDTO.add(linkTo(methodOn(ArticleController.class).getArticleById(articleDTO.getArticleId())).withSelfRel());
+        return ResponseEntity.status(HttpStatus.CREATED).body(articleDTO);
     }
 
     @DeleteMapping("/{id}")

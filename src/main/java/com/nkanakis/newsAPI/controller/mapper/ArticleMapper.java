@@ -21,7 +21,7 @@ public class ArticleMapper {
             return dto;
         }
         BeanUtils.copyProperties(article, dto);
-
+        dto.setArticleId(article.getId());
         List<String> authors = article.getAuthors().stream()
                 .map(a -> a.getFirstname() + " " + a.getLastname())
                 .collect(Collectors.toList());
@@ -37,6 +37,7 @@ public class ArticleMapper {
             return article;
         }
         BeanUtils.copyProperties(dto, article);
+        article.setId(dto.getArticleId());
 
         List<Author> authors = dto.getAuthors().stream()
                 .filter(a -> a.length() >= 3)

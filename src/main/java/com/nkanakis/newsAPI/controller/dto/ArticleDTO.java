@@ -2,7 +2,11 @@ package com.nkanakis.newsAPI.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.springframework.hateoas.ResourceSupport;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -12,12 +16,12 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
 @ToString
 @ApiModel(value = "Article components")
-public class ArticleDTO {
+public class ArticleDTO extends ResourceSupport {
 
-    private String id;
+    @JsonProperty(value = "id")
+    private String articleId;
     @NotBlank
     private String header;
     @JsonProperty(value = "description")
@@ -29,4 +33,5 @@ public class ArticleDTO {
     @NotEmpty
     private List<String> authors;
     private List<String> keywords;
+
 }
