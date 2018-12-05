@@ -6,6 +6,7 @@ import com.nkanakis.newsAPI.repository.model.Article;
 import com.nkanakis.newsAPI.service.ArticleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 @Api(value = "Article API", description = "Article retrieval operations")
 @RequestMapping(path = "/articles")
+@Slf4j
 public class ArticleController {
 
     @Autowired
@@ -51,10 +53,15 @@ public class ArticleController {
             response = ArticleDTO.class, responseContainer = "List")
     public ResponseEntity<List<ArticleDTO>> getArticlesByPeriod(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
                                                                 @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
-        if (startDate == null)
+        if (startDate == null) {
+            log.info("Start date not provided setting day to 1970-01-01");
             startDate = LocalDate.ofEpochDay(0);
-        if (endDate == null)
+        }
+
+        if (endDate == null) {
+            log.info("End date not provided setting day to current date");
             endDate = LocalDate.now();
+        }
         List<Article> articlesByPeriod = articleService.getArticlesByPeriod(startDate, endDate);
         return ResponseEntity.ok(mapper.toDTOs(articlesByPeriod));
     }

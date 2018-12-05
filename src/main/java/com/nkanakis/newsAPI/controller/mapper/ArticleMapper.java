@@ -3,6 +3,7 @@ package com.nkanakis.newsAPI.controller.mapper;
 import com.nkanakis.newsAPI.controller.dto.ArticleDTO;
 import com.nkanakis.newsAPI.repository.model.Article;
 import com.nkanakis.newsAPI.repository.model.Author;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
@@ -10,12 +11,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@Slf4j
 public class ArticleMapper {
 
     public ArticleDTO toDTO(Article article) {
         ArticleDTO dto = new ArticleDTO();
-        if (article == null)
+        if (article == null) {
+            log.error("Article is null could not be transformed to ArticleDTO, returning empty object");
             return dto;
+        }
         BeanUtils.copyProperties(article, dto);
 
         List<String> authors = article.getAuthors().stream()
@@ -28,8 +32,10 @@ public class ArticleMapper {
 
     public Article toEntity(ArticleDTO dto) {
         Article article = new Article();
-        if (dto == null)
+        if (dto == null) {
+            log.error("ArticleDTO is null could not be transformed to Article, returning empty object");
             return article;
+        }
         BeanUtils.copyProperties(dto, article);
 
         List<Author> authors = dto.getAuthors().stream()
@@ -45,7 +51,6 @@ public class ArticleMapper {
     }
 
     public List<ArticleDTO> toDTOs(List<Article> articlesByAuthor) {
-
         return articlesByAuthor.stream()
                 .map(this::toDTO)
                 .collect(Collectors.toList());
