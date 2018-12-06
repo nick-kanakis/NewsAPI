@@ -22,7 +22,6 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @Slf4j
 @RequestMapping(path = "/editor")
 public class EditorController {
-    //todo add security?
 
     @Autowired
     private EditorService editorService;

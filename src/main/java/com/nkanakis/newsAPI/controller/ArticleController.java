@@ -65,7 +65,7 @@ public class ArticleController {
     }
 
     @GetMapping(path = "/byPeriod")
-    @ApiOperation(value = "Retrieves ArticleDTO within a given period", notes = "If no start/end period is specified, returns all Articles from the start of time/until now",
+    @ApiOperation(value = "Retrieves ArticleDTO within a given period", notes = "If no start/end period is specified, the date is set to start of time/until now respectively.",
             response = ArticleDTO.class, responseContainer = "List")
     public ResponseEntity<List<ArticleDTO>> getArticlesByPeriod(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
                                                                 @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
