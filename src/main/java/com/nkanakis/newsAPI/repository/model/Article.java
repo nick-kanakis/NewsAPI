@@ -19,6 +19,7 @@ public class Article {
     private String id;
     private String header;
     private String desc;
+    private String text;
     private LocalDate publicationDate;
     private List<Author> authors;
     private List<String> keywords;

@@ -27,6 +27,8 @@ public class ArticleDTO extends ResourceSupport {
     @JsonProperty(value = "description")
     @NotBlank
     private String desc;
+    @NotBlank
+    private String text;
     @JsonProperty(value = "publication_date")
     private LocalDate publicationDate;
 

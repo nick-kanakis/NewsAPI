@@ -29,6 +29,7 @@ public class ArticleMapperTest {
         articleDTO = new ArticleDTO();
         articleDTO.setHeader("MyHeader");
         articleDTO.setDesc("MyDesc");
+        articleDTO.setDesc("MyText");
         articleDTO.setPublicationDate(LocalDate.of(2018, 12, 15));
         articleDTO.setKeywords(Collections.newArrayList("Key1", "Key2"));
         articleDTO.setAuthors(Collections.newArrayList("Nick Kanakis", "George Pavlov"));
@@ -36,6 +37,7 @@ public class ArticleMapperTest {
         article = new Article();
         article.setHeader("MyHeader");
         article.setDesc("MyDesc");
+        article.setDesc("MyText");
         article.setPublicationDate(LocalDate.of(2018, 12, 15));
         article.setKeywords(Collections.newArrayList("Key1", "Key2"));
         article.setAuthors(Collections.newArrayList(new Author("Nick", "Kanakis"), new Author("George", "Pavlov")));

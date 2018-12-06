@@ -22,11 +22,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
-public class NewsAPIIT {
+public class AppIT {
 
-    private final String CREATE_ARTICLE = "{ \"header\": \"My header\", \"description\": \"Desc...\", \"publication_date\": \"2018-08-04\", \"authors\": [ \"Nick Kanakis\", \"George Pavlov\"], \"keywords\": [ \"key1\", \"key2\" ] }";
-    private final String UPDATE_ARTICLE = "{ \"id\": \"A123\",\"header\": \"My header 2\", \"description\": \"Desc...\", \"publication_date\": \"2018-08-04\", \"authors\": [ \"Nick Kanakis\", \"George Pavlov\"], \"keywords\": [ \"key1\", \"key2\" ] }";
-    private final String UPDATE__NON_EXISTING_ARTICLE = "{ \"id\": \"A124\",\"header\": \"My header 2\", \"description\": \"Desc...\", \"publication_date\": \"2018-08-04\", \"authors\": [ \"Nick Kanakis\", \"George Pavlov\"], \"keywords\": [ \"key1\", \"key2\" ] }";
+    private final String CREATE_ARTICLE = "{ \"header\": \"My header\", \"description\": \"Desc...\",\"text\": \"Text...\", \"publication_date\": \"2018-08-04\", \"authors\": [ \"Nick Kanakis\", \"George Pavlov\"], \"keywords\": [ \"key1\", \"key2\" ] }";
+    private final String UPDATE_ARTICLE = "{ \"id\": \"A123\",\"header\": \"My header 2\", \"description\": \"Desc...\",\"text\": \"Text...\", \"publication_date\": \"2018-08-04\", \"authors\": [ \"Nick Kanakis\", \"George Pavlov\"], \"keywords\": [ \"key1\", \"key2\" ] }";
+    private final String UPDATE__NON_EXISTING_ARTICLE = "{ \"id\": \"A124\",\"header\": \"My header 2\", \"description\": \"Desc...\",\"text\": \"Text...\", \"publication_date\": \"2018-08-04\", \"authors\": [ \"Nick Kanakis\", \"George Pavlov\"], \"keywords\": [ \"key1\", \"key2\" ] }";
     @Autowired
     private MockMvc mockMvc;
     @Autowired
