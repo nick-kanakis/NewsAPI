@@ -14,6 +14,14 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ArticleMapper {
 
+    /**
+     * Maps Article entity to ArticleDTO.
+     * <p>
+     * In case provided object is null mapper returns an new empty object.
+     *
+     * @param article entity article.
+     * @return dto version of article.
+     */
     public ArticleDTO toDTO(Article article) {
         ArticleDTO dto = new ArticleDTO();
         if (article == null) {
@@ -30,6 +38,14 @@ public class ArticleMapper {
         return dto;
     }
 
+    /**
+     * Maps ArticleDTO to Article entity.
+     * <p>
+     * In case provided object is null mapper returns an new empty object.
+     *
+     * @param dto dto version of article.
+     * @return article entity
+     */
     public Article toEntity(ArticleDTO dto) {
         Article article = new Article();
         if (dto == null) {
@@ -51,8 +67,16 @@ public class ArticleMapper {
         return article;
     }
 
-    public List<ArticleDTO> toDTOs(List<Article> articlesByAuthor) {
-        return articlesByAuthor.stream()
+    /**
+     * Maps a list of articles to a list of ArticleDTOs.
+     * <p>
+     * Uses {@link #toDTO(Article)} method.
+     *
+     * @param articles list of Article entities.
+     * @return list of article DTOs
+     */
+    public List<ArticleDTO> toDTOs(List<Article> articles) {
+        return articles.stream()
                 .map(this::toDTO)
                 .collect(Collectors.toList());
     }

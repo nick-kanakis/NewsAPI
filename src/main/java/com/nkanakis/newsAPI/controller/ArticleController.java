@@ -18,6 +18,7 @@ import java.util.List;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
+
 @RestController
 @Api(value = "Article API", description = "Article retrieval operations")
 @RequestMapping(path = "/articles")
@@ -63,6 +64,7 @@ public class ArticleController {
         List<Article> articlesByKeyword = articleService.getArticlesByKeyword(keyword);
         return ResponseEntity.ok(mapper.toDTOs(articlesByKeyword));
     }
+
 
     @GetMapping(path = "/byPeriod")
     @ApiOperation(value = "Retrieves ArticleDTO within a given period", notes = "If no start/end period is specified, the date is set to start of time/until now respectively.",

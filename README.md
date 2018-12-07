@@ -3,8 +3,6 @@
 [![Build Status](https://travis-ci.org/nicolasmanic/NewsAPI.svg?branch=master)](https://travis-ci.org/nicolasmanic/TriangleChallenge)
 [![codecov](https://codecov.io/gh/nicolasmanic/NewsAPI/branch/master/graph/badge.svg)](https://codecov.io/gh/nicolasmanic/TriangleChallenge)
 
-# Weather API
-
 ## Prerequisite
 - JDK 8+
 - Maven 3+
@@ -154,3 +152,5 @@ corresponding ```@ImplNote``` annotation
 2. Add a complete CI/CD pipeline.
 3. Add an external nosql instance instead of a embedded one. This will also healp make the application reactive since now the 
 embedded mongo does not contain reactive drivers.
+4. Add cache in application level, popular articles can be served by the cache and avoid calls to the dn. As articles are 
+unlike to change cache invalidation is not a big problem.

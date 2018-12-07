@@ -17,6 +17,10 @@ import javax.validation.Valid;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
+/**
+ * @implNote updateArticle & delete article throw Illegal Argument exception to notify the editor that
+ * the article in request does not exist.
+ */
 @RestController
 @Api(value = "Editor API", description = "CUD Operations on articles, accessible only by editors")
 @Slf4j
@@ -42,10 +46,6 @@ public class EditorController {
     @ApiOperation(value = "Updates existing article", response = ArticleDTO.class)
     public ResponseEntity<ArticleDTO> updateArticle(@Valid @RequestBody ArticleDTO article) {
         Article updatedArticle = editorService.updateArticle(mapper.toEntity(article));
-        if (updatedArticle == null) {
-            log.info("Id: {} does not exist, failed to update article", article.getId());
-            throw new IllegalArgumentException("Could not update article please review provided id");
-        }
         ArticleDTO articleDTO = mapper.toDTO(updatedArticle);
         articleDTO.add(linkTo(methodOn(ArticleController.class).getArticleById(articleDTO.getArticleId())).withSelfRel());
         return ResponseEntity.status(HttpStatus.CREATED).body(articleDTO);
@@ -54,10 +54,7 @@ public class EditorController {
     @DeleteMapping("/{id}")
     @ApiOperation(value = "Deletes article")
     public ResponseEntity<Void> deleteArticle(@PathVariable String id) {
-        if (!editorService.deleteArticle(id)) {
-            log.info("Id: {} does not exist, failed to dete article", id);
-            throw new IllegalArgumentException("Could not update article please review provided id");
-        }
+        editorService.deleteArticle(id);
         return ResponseEntity.ok().build();
     }
 

@@ -8,5 +8,5 @@ public interface EditorService {
 
     Article updateArticle(Article article);
 
-    boolean deleteArticle(String id);
+    void deleteArticle(String id);
 }

@@ -17,6 +17,13 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private ArticleRepository articleRepository;
 
+    /**
+     * Returns article by provided id.
+     *
+     * @param id articles ID.
+     * @return stored article.
+     * @throws RuntimeException in case data are unavailable.
+     */
     @Override
     public Article getArticleById(String id) {
         Optional<Article> optionalArticle = articleRepository.findById(id);
