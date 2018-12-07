@@ -1,7 +1,7 @@
 # NewsAPI
 
-[![Build Status](https://travis-ci.org/nicolasmanic/NewsAPI.svg?branch=master)](https://travis-ci.org/nicolasmanic/TriangleChallenge)
-[![codecov](https://codecov.io/gh/nicolasmanic/NewsAPI/branch/master/graph/badge.svg)](https://codecov.io/gh/nicolasmanic/TriangleChallenge)
+[![Build Status](https://travis-ci.org/nicolasmanic/NewsAPI.svg?branch=master)](https://travis-ci.org/nicolasmanic/NewsAPI)
+[![codecov](https://codecov.io/gh/nicolasmanic/NewsAPI/branch/master/graph/badge.svg)](https://codecov.io/gh/nicolasmanic/NewsAPI)
 
 ## Prerequisite
 - JDK 8+
@@ -38,7 +38,7 @@ mvn clean verify -Pfailsafe
 mvn spring-boot:run
 ```
 
-**NOTE:** You can also use the wrapped maven version provided to run any maven command, simply ise ```mvnw``` instead
+**NOTE:** You can also use the wrapped maven version provided to run any maven command, simply use ```mvnw``` instead
 of ```mvn```
 
 ## API
@@ -46,17 +46,17 @@ of ```mvn```
 **Article Controller**
 Article retrieval operations
 
-Retrieve by author name
+Retrieve by author name:
 ``` 
 GET localhost:8080/articles/byAuthor?firstName={First name}&lastName={Last name}
 ```
 
-Retrieve by id
+Retrieve by id:
 ``` 
 GET localhost:8080/articles/byId/{id}
 ```
 
-Retrieve by keyword
+Retrieve by keyword:
 ``` 
 GET localhost:8080/articles/byKeyword/{keyword}
 ```
@@ -68,7 +68,7 @@ GET localhost:8080/articles/byPeriod?startDate={Start Date}&endDate={endDate}
 **Editor Controller**
 CUD Operations on articles, accessible only by editors.
 
-Create article.
+Create article:
 ``` 
 POST localhost:8080/post
 body: {
@@ -76,18 +76,12 @@ body: {
         "description": "string",
         "header": "string",
         "keywords": [ "string" ],
-        "links": [
-          {
-            "href": "string",
-            "templated": true
-          }
-        ],
         "publication_date": "string",
         "text": "string"
       }
 ```
 
-Update article.
+Update article:
 ``` 
 PUT localhost:8080/post
 body: {
@@ -96,18 +90,12 @@ body: {
         "header": "string",
         "id": "string",
         "keywords": [ "string" ],
-        "links": [
-          {
-            "href": "string",
-            "templated": true
-          }
-        ],
         "publication_date": "string",
         "text": "string"
       }
 ```
 
-Delete article.
+Delete article:
 ``` 
 PUT localhost:8080/post/{id}
 ```
@@ -125,10 +113,10 @@ The application is based on the Spring Boot framework and can be separated in 3 
 
 ### Rest controller
 
-It is responsible for exposing the endpoints described in section API[#api] section and displays any exception
+It is responsible for exposing the endpoints described in section API[#api] and displays any exception
 it may arise by returning a json message informing the user about the error. Finally handles the mapping between the dto
-and the entity that is used in the rest of the application. The article DTO is separated into Article & Author since in the
-future we may need to add more data into the Author object.
+and the entity that is used in the rest of the application. The article DTO is separated into Article & Author objects since
+in the future we may need to add more data into the Author object (like username/password etc).
 
 **Note**: The editor API should be protected and allow only registered users with "editor" privileges to access it. Spring
 Security could be used for this use case.
@@ -140,7 +128,7 @@ for missing data avoiding the need for unnecessary requests to the db.
 ### Repository
 
 A nosql (mongodb) repository was selected for this use cases, the reasons behind it was that an article is not a strictly
-structured data and using a sql scheme would result in multiple probably expensive joins.
+structured entity and using a sql scheme would result in multiple probably expensive joins.
 
 For more information please see the provided javadocs. Also for specific implementation decisions please see the 
 corresponding ```@ImplNote``` annotation
@@ -150,7 +138,7 @@ corresponding ```@ImplNote``` annotation
 
 1. Add roles & credentials to authors and secure the Editor controller.
 2. Add a complete CI/CD pipeline.
-3. Add an external nosql instance instead of a embedded one. This will also healp make the application reactive since now the 
+3. Add an external nosql instance instead of a embedded one. This will also help make the application reactive since now the 
 embedded mongo does not contain reactive drivers.
-4. Add cache in application level, popular articles can be served by the cache and avoid calls to the dn. As articles are 
+4. Add cache in application level, popular articles can be served by the cache and avoid calls to the db. As articles are 
 unlike to change cache invalidation is not a big problem.
