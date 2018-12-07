@@ -44,6 +44,7 @@ of ```mvn```
 ## API
 
 **Article Controller**
+
 Article retrieval operations
 
 Retrieve by author name:
@@ -66,6 +67,7 @@ Retrieve by Period. If no start/end period is specified, the date is set to star
 GET localhost:8080/articles/byPeriod?startDate={Start Date}&endDate={endDate}
 ```
 **Editor Controller**
+
 CUD Operations on articles, accessible only by editors.
 
 Create article:
@@ -113,7 +115,7 @@ The application is based on the Spring Boot framework and can be separated in 3 
 
 ### Rest controller
 
-It is responsible for exposing the endpoints described in section API[#api] and displays any exception
+It is responsible for exposing the endpoints described in section API and displays any exception
 it may arise by returning a json message informing the user about the error. Finally handles the mapping between the dto
 and the entity that is used in the rest of the application. The article DTO is separated into Article & Author objects since
 in the future we may need to add more data into the Author object (like username/password etc).
